@@ -36,62 +36,62 @@ class Student
     end.first
   end
 
-  def self.first_X_students_in_grade_10(x)
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade = 10
-      LIMIT ?
-    SQL
-
-    DB[:conn].execute(sql, x).map do |row|
-      self.new_from_db(row)
+  ef self.count_all_students_in_grade_9
+      sql = <<-SQL
+        SELECT * FROM students
+        WHERE grade = ?
+      SQL
+  
+      DB[:conn].execute(sql, '9').map do |row|
+        self.new_from_db(row)
+      end
     end
-  end
-
-  def self.all_students_in_grade_X(x)
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade = ?
-    SQL
-
-    DB[:conn].execute(sql, x).map do |row|
-      self.new_from_db(row)
+  
+    def self.students_below_12th_grade
+      sql = <<-SQL
+        SELECT * FROM students
+        WHERE grade < ?
+      SQL
+  
+      DB[:conn].execute(sql, '12').map do |row|
+        self.new_from_db(row)
+      end
     end
-  end
-
-  def self.first_student_in_grade_10
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade = 10
-      LIMIT 1
-    SQL
-
-    DB[:conn].execute(sql).map do |row|
-      self.new_from_db(row)
-    end.first
-  end
-  def self.count_all_students_in_grade_9
-    sql = <<-SQL
-      SELECT COUNT()
-      FROM students
-      WHERE grade = ?
-    SQL
-
-    DB[:conn].execute(sql,9)
-  end
-
-  def self.students_below_12th_grade
-    sql = <<-SQL
-      SELECT *
-      FROM students
-      WHERE grade < ?
-    SQL
-
-    DB[:conn].execute(sql,12)
-  end
+  
+    def self.first_X_students_in_grade_10(x)
+      sql = <<-SQL
+        SELECT * FROM students
+        WHERE grade = ?
+        LIMIT ?
+      SQL
+  
+      DB[:conn].execute(sql, '10', x).map do |row|
+        self.new_from_db(row)
+      end
+    end
+  
+    def self.first_student_in_grade_10
+      sql = <<-SQL
+        SELECT * FROM students
+        WHERE grade = ?
+        LIMIT 1
+      SQL
+  
+      DB[:conn].execute(sql, '10').map do |row|
+        self.new_from_db(row)
+      end.first
+    end
+  
+    def self.all_students_in_grade_X(x)
+      sql = <<-SQL
+        SELECT * FROM students
+        WHERE grade = ?
+      SQL
+  
+      DB[:conn].execute(sql, x).map do |row|
+        self.new_from_db(row)
+      end
+    end
 
   def save
     sql = <<-SQL
